@@ -23,8 +23,8 @@ const NavBar = () => {
     const links = <>
 
         <li><NavLink to={'/'}>Home</NavLink></li>
-        <li><NavLink to={'/rooms'}>Rooms</NavLink></li>
-        <li><NavLink to={'/my-bookings'}>My Bookings</NavLink></li>
+        <li><NavLink to={'/employee'}>Join as Employee</NavLink></li>
+        <li><NavLink to={'/hr-manager'}>Join as HR Manager</NavLink></li>
 
         {/* <li><NavLink to={'/my-list'}>My List</NavLink></li> */}
 
