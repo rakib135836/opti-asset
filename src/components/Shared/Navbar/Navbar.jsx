@@ -16,13 +16,7 @@ const Navbar = () => {
           <div className='flex flex-row  items-center justify-between gap-3 md:gap-0'>
             {/* Logo */}
             <Link to='/'>
-              <img
-                // className='hidden md:block'
-                src='https://i.ibb.co/4ZXzmq5/logo.png'
-                alt='logo'
-                width='100'
-                height='100'
-              />
+              <h1 className='font-bold text-2xl border-2'>opti-Asset</h1>
             </Link>
             {/* Dropdown Menu */}
             <div className='relative'>
@@ -85,10 +79,16 @@ const Navbar = () => {
                           Login
                         </Link>
                         <Link
-                          to='/signup'
+                          to='/employee'
                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                         >
-                          Sign Up
+                          Join as an Employee
+                        </Link>
+                        <Link
+                          to='/hr-manager'
+                          className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                        >
+                          join as a Hr
                         </Link>
                       </>
                     )}
