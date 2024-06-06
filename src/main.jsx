@@ -18,6 +18,7 @@ import {
   QueryClientProvider,
   
 } from '@tanstack/react-query'
+import Login from './Pages/Login/Login';
 
 const queryClient = new QueryClient()
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
      {
       path:"/hr-manager",
       element:<JoinAsHR></JoinAsHR>,
+     },
+     {
+      path:"/login",
+      element:<Login></Login>,
      }
     ]
   },
