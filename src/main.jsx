@@ -19,6 +19,7 @@ import {
   
 } from '@tanstack/react-query'
 import Login from './Pages/Login/Login';
+import DashboardLayout from './Layout/DashboardLayout';
 
 const queryClient = new QueryClient()
 
@@ -30,21 +31,30 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-      },
-     {
-      path:"/employee",
-      element:<JoinAsEmployee></JoinAsEmployee>,
-     },
-     {
-      path:"/hr-manager",
-      element:<JoinAsHR></JoinAsHR>,
-     },
-     {
-      path:"/login",
-      element:<Login></Login>,
-     }
+      }
+    
     ]
   },
+  {
+    path:"/employee",
+    element:<JoinAsEmployee></JoinAsEmployee>,
+   },
+   {
+    path:"/hr-manager",
+    element:<JoinAsHR></JoinAsHR>,
+   },
+   {
+    path:"/login",
+    element:<Login></Login>,
+   },
+   {
+    path: "/dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      
+    
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
