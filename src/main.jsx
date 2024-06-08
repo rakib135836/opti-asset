@@ -20,6 +20,13 @@ import {
 } from '@tanstack/react-query'
 import Login from './Pages/Login/Login';
 import DashboardLayout from './Layout/DashboardLayout';
+import HrHome from './Pages/Dashboard/Hr/HrHome/HrHome';
+import AddAsset from './Pages/Dashboard/Hr/AddAsset/AddAsset';
+import AssetList from './Pages/Dashboard/Hr/AssetList/AssetList';
+import AddEmployee from './Pages/Dashboard/Hr/AddEmployee/AddEmployee';
+import MyEmployee from './Pages/Dashboard/Hr/MyEmployee/MyEmployee';
+import AllRequest from './Pages/Dashboard/Hr/AllRequest/AllRequest';
+import CustomList from './Pages/Dashboard/Hr/CustomList/CustomList';
 
 const queryClient = new QueryClient()
 
@@ -51,7 +58,34 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout></DashboardLayout>,
     children: [
-      
+      {
+        path:'hr-home',
+       element:<HrHome></HrHome>,
+      },
+      {
+        path:'add-asset',
+        element:<AddAsset></AddAsset>,
+      },
+      {
+        path:'asset-list',
+        element:<AssetList></AssetList>
+      },
+      {
+        path:'add-employee',
+        element:<AddEmployee></AddEmployee>,
+      },
+      {
+        path:'my-employee',
+        element:<MyEmployee></MyEmployee>,
+      },
+      {
+        path:'all-request',
+        element:<AllRequest></AllRequest>,
+      },
+      {
+        path:'custom-request',
+        element:<CustomList></CustomList>,
+      }
     
     ]
   }
