@@ -60,11 +60,16 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <div className='max-w-7xl mx-auto font-Poppins '>
     <React.StrictMode>
+
+      <AuthProvider>
       <QueryClientProvider client={queryClient}>
-     <AuthProvider>
+     
      <RouterProvider router={router} />
-     </AuthProvider>
+     
      </QueryClientProvider>
+     </AuthProvider>
+     
     </React.StrictMode>,
   </div>
 )
+// ------------
