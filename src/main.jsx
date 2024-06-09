@@ -11,12 +11,12 @@ import Root from './Layout/Root';
 import Home from './Pages/Home/Home';
 import JoinAsEmployee from './Pages/JoinAsEmployee/JoinAsEmployee';
 import JoinAsHR from './Pages/JoinAsHR/JoinAsHR';
-import AuthProvider from './providers/AuthProvider';
+
 
 import {
   QueryClient,
   QueryClientProvider,
-  
+
 } from '@tanstack/react-query'
 import Login from './Pages/Login/Login';
 import DashboardLayout from './Layout/DashboardLayout';
@@ -27,6 +27,8 @@ import AddEmployee from './Pages/Dashboard/Hr/AddEmployee/AddEmployee';
 import MyEmployee from './Pages/Dashboard/Hr/MyEmployee/MyEmployee';
 import AllRequest from './Pages/Dashboard/Hr/AllRequest/AllRequest';
 import CustomList from './Pages/Dashboard/Hr/CustomList/CustomList';
+
+import AuthProvider from './providers/AuthProvider';
 
 const queryClient = new QueryClient()
 
@@ -39,54 +41,54 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       }
-    
+
     ]
   },
   {
-    path:"/employee",
-    element:<JoinAsEmployee></JoinAsEmployee>,
-   },
-   {
-    path:"/hr-manager",
-    element:<JoinAsHR></JoinAsHR>,
-   },
-   {
-    path:"/login",
-    element:<Login></Login>,
-   },
-   {
+    path: "/employee",
+    element: <JoinAsEmployee></JoinAsEmployee>,
+  },
+  {
+    path: "/hr-manager",
+    element: <JoinAsHR></JoinAsHR>,
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  {
     path: "/dashboard",
     element: <DashboardLayout></DashboardLayout>,
     children: [
       {
-        path:'hr-home',
-       element:<HrHome></HrHome>,
+        path: 'hr-home',
+        element: <HrHome></HrHome>,
       },
       {
-        path:'add-asset',
-        element:<AddAsset></AddAsset>,
+        path: 'add-asset',
+        element: <AddAsset></AddAsset>,
       },
       {
-        path:'asset-list',
-        element:<AssetList></AssetList>
+        path: 'asset-list',
+        element: <AssetList></AssetList>
       },
       {
-        path:'add-employee',
-        element:<AddEmployee></AddEmployee>,
+        path: 'add-employee',
+        element: <AddEmployee></AddEmployee>,
       },
       {
-        path:'my-employee',
-        element:<MyEmployee></MyEmployee>,
+        path: 'my-employee',
+        element: <MyEmployee></MyEmployee>,
       },
       {
-        path:'all-request',
-        element:<AllRequest></AllRequest>,
+        path: 'all-request',
+        element: <AllRequest></AllRequest>,
       },
       {
-        path:'custom-request',
-        element:<CustomList></CustomList>,
+        path: 'custom-request',
+        element: <CustomList></CustomList>,
       }
-    
+
     ]
   }
 ]);
@@ -95,14 +97,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <div className='max-w-7xl mx-auto font-Poppins '>
     <React.StrictMode>
 
-      <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-     
-     <RouterProvider router={router} />
-     
-     </QueryClientProvider>
-     </AuthProvider>
-     
+     <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+
+          <RouterProvider router={router} />
+
+        </QueryClientProvider>
+        </AuthProvider>
+      
     </React.StrictMode>,
   </div>
 )
