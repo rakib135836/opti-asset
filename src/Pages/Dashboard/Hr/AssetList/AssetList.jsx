@@ -29,30 +29,30 @@ const AssetList = () => {
         },
     });
 
-    // // Delete Room
-    // const { mutateAsync } = useMutation({
-    //     mutationFn: async (id) => {
-    //         const { data } = await axiosSecure.delete(`/room/${id}`);
-    //         return data;
-    //     },
-    //     onSuccess: (data) => {
-    //         console.log(data);
-    //         refetch();
-    //         toast.success('Successfully deleted.');
-    //     },
-    // });
+    // Delete asset
+    const { mutateAsync } = useMutation({
+        mutationFn: async (id) => {
+            const { data } = await axiosSecure.delete(`/asset/${id}`);
+            return data;
+        },
+        onSuccess: (data) => {
+            console.log(data);
+            refetch();
+            toast.success('Successfully deleted.');
+        },
+    });
 
-    // // Handle Delete
-    // const handleDelete = async (id) => {
-    //     console.log(id);
-    //     try {
-    //         await mutateAsync(id);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
+    // Handle Delete
+    const handleDelete = async (id) => {
+        console.log(id);
+        try {
+            await mutateAsync(id);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    // if (isLoading) return <LoadingSpinner />;
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <div>
@@ -110,7 +110,8 @@ const AssetList = () => {
                                         <RoomDataRow
                                             key={asset._id}
                                             asset={asset}
-                                            // handleDelete={handleDelete}
+                                            handleDelete={handleDelete}
+                                            refetch={refetch}
                                         />
                                     ))}
                                 </tbody>

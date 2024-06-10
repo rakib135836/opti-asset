@@ -1,24 +1,17 @@
 import PropTypes from 'prop-types'
-
 import { useState } from 'react'
-// import {
-//   Description,
-//   Dialog,
-//   DialogPanel,
-//   DialogTitle,
-// } from '@headlessui/react'
-// import DeleteModal from '../../Modal/DeleteModal'
-const RoomDataRow = ({ asset }) => {
-    // for delete modal
+
+import DeleteModal from '../../Modal/DeleteModal'
+import { Link } from 'react-router-dom'
+
+const RoomDataRow = ({ asset, handleDelete }) => {
     let [isOpen, setIsOpen] = useState(false)
     const closeModal = () => {
         setIsOpen(false)
     }
 
-    // for update modal
     return (
         <tr>
-            
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <p className='text-gray-900 whitespace-no-wrap'>{asset?.date}</p>
             </td>
@@ -31,7 +24,6 @@ const RoomDataRow = ({ asset }) => {
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <p className='text-gray-900 whitespace-no-wrap'>${asset?.type}</p>
             </td>
-           
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <button
                     onClick={() => setIsOpen(true)}
@@ -43,13 +35,12 @@ const RoomDataRow = ({ asset }) => {
                     ></span>
                     <span className='relative'>Delete</span>
                 </button>
-                {/* Delete modal */}
-                {/* <DeleteModal
+                <DeleteModal
                     isOpen={isOpen}
                     closeModal={closeModal}
                     handleDelete={handleDelete}
                     id={asset?._id}
-                /> */}
+                />
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <span className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
@@ -57,17 +48,19 @@ const RoomDataRow = ({ asset }) => {
                         aria-hidden='true'
                         className='absolute inset-0 bg-green-200 opacity-50 rounded-full'
                     ></span>
-                    <span className='relative'>Update</span>
+                     <Link to={`/dashboard/update/${asset?._id}`}>
+                        <span className='relative'>Update</span>
+                    </Link>
                 </span>
-                {/* Update Modal */}
             </td>
         </tr>
     )
 }
 
 RoomDataRow.propTypes = {
-    room: PropTypes.object,
-    refetch: PropTypes.func,
+    asset: PropTypes.object.isRequired,
+    refetch: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
 }
 
 export default RoomDataRow

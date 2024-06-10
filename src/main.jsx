@@ -29,6 +29,8 @@ import AllRequest from './Pages/Dashboard/Hr/AllRequest/AllRequest';
 import CustomList from './Pages/Dashboard/Hr/CustomList/CustomList';
 
 import AuthProvider from './providers/AuthProvider';
+import Update from './Pages/Dashboard/Hr/AssetList/Update/Update';
+
 
 const queryClient = new QueryClient()
 
@@ -87,6 +89,12 @@ const router = createBrowserRouter([
       {
         path: 'custom-request',
         element: <CustomList></CustomList>,
+      },
+      {
+
+        path: 'update/:id',
+        element: <Update></Update>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/getting-assets/${params.id}`)
       }
 
     ]
