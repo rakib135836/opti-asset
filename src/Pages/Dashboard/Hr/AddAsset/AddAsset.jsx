@@ -4,12 +4,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useAuth from "../../../../hooks/useAuth";
 
 const AddAsset = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [productType, setProductType] = useState("returnable");
+    const { user } = useAuth();
 
-    const notify = () => toast("asset added  successfully");
+    const notify = () => toast("Asset added successfully");
 
     const handleAddAsset = async (e) => {
         e.preventDefault();
@@ -17,21 +19,30 @@ const AddAsset = () => {
         const product = form.productName.value;
         const quantity = form.quantity.value;
 
+        if (!user || !user.email) {
+            toast.error('User not logged in or email not available');
+            return;
+        }
+
         const addedDetails = {
             date: startDate,
             product,
             quantity,
             type: productType,
+            email: user.email,
         };
-        console.log(addedDetails);
+        console.log('Adding asset:', addedDetails);
 
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/asset`, addedDetails);
+            console.log('Response from server:', data);
             if (data.insertedId) {
-                notify()
+                notify();
+            } else {
+                toast.error('Failed to add asset');
             }
         } catch (err) {
-            console.error(err);
+            console.error('Error occurred:', err);
             toast.error('An error occurred');
         }
     };
@@ -116,7 +127,6 @@ const AddAsset = () => {
             </div>
             <ToastContainer />
         </div>
-        
     );
 };
 
