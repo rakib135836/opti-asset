@@ -37,23 +37,37 @@ const JoinAsEmployee = () => {
             setLoading(true)
             // 1. Upload image and get image url
             const { data } = await axios.post(
-                `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY
-                }`,
+                `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
                 formData
             )
-            console.log(data.data.display_url)
+            const imageUrl = data.data.display_url
+            console.log(imageUrl)
 
-            //2. User Registration
+            // 2. User Registration
             const result = await createUser(email, password)
             console.log(result)
 
             // 3. Save username and photo in firebase
-            await updateUserProfile(name, data.data.display_url)
+            await updateUserProfile(name, imageUrl)
+
+            // 4. Save user data in the database
+            const userData = {
+                name,
+                email,
+                role: 'employee',
+                status: 'verified',
+                image: imageUrl,
+                dob: startDate // Save date of birth
+            }
+            await axios.put(`${import.meta.env.VITE_API_URL}/user`, userData)
+            
             navigate('/')
             toast.success('Signup Successful')
         } catch (err) {
             console.log(err)
             toast.error(err.message)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -80,7 +94,7 @@ const JoinAsEmployee = () => {
                 <form onSubmit={handleSubmit} className='space-y-6'>
                     <div className='space-y-4'>
                         <div>
-                            <label htmlFor='email' className='block mb-2 text-sm'>
+                            <label htmlFor='name' className='block mb-2 text-sm'>
                                 Name
                             </label>
                             <input
@@ -89,12 +103,11 @@ const JoinAsEmployee = () => {
                                 id='name'
                                 placeholder='Enter Your Name Here'
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                                data-temp-mail-org='0'
                             />
                         </div>
 
                         <div>
-                            <label htmlFor='email' className='block mb-2 text-sm'>
+                            <label htmlFor='dob' className='block mb-2 text-sm'>
                                 Date of birth 
                             </label>
                             <DatePicker  className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900' selected={startDate} onChange={(date) => setStartDate(date)} />
@@ -122,7 +135,6 @@ const JoinAsEmployee = () => {
                                 required
                                 placeholder='Enter Your Email Here'
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                                data-temp-mail-org='0'
                             />
                         </div>
                         <div>
@@ -152,7 +164,7 @@ const JoinAsEmployee = () => {
                             {loading ? (
                                 <TbFidgetSpinner className='animate-spin m-auto' />
                             ) : (
-                                'join'
+                                'Join'
                             )}
                         </button>
                     </div>
