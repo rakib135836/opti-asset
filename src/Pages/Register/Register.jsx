@@ -7,27 +7,43 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import SocialLogin from "../../Components/SocialLogin/SocilaLogin";
-// import useAxiosPublic from "../../hooks/useAxiosPublic";
-// import SocialLogin from "../../components/SocialLogin/SocialLogin";
-
 
 // date picker
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+
+
+const image_hosting_key = import.meta.env.VITE_IMGBB_API_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 
 const Register = () => {
-    // const axiosPublic = useAxiosPublic();
+    const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
     const [startDate, setStartDate] = useState(new Date());
 
-    const onSubmit = data => {
+    const onSubmit = async (data) => {
 
-        createUser(data.email, data.password)
+        const imageFile = new FormData();
+        imageFile.append('image', data.image[0]);
+
+
+        const res = await axiosPublic.post(image_hosting_api, imageFile, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        });
+        console.log(res);
+
+        if (res.data.success) {
+            const imageURL = res.data.data.url; 
+
+
+            createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
@@ -36,28 +52,38 @@ const Register = () => {
                         // create user entry in the database
                         const userInfo = {
                             name: data.name,
-                            email: data.email
+                            email: data.email,
+                            birthDate:startDate,
+                            photo:imageURL,
+                            identity:'employee'
+
                         }
-                        // axiosPublic.post('/users', userInfo)
-                        //     .then(res => {
-                        //         if (res.data.insertedId) {
-                        //             console.log('user added to the database')
-                        //             reset();
-                        //             Swal.fire({
-                        //                 position: 'top-end',
-                        //                 icon: 'success',
-                        //                 title: 'User created successfully.',
-                        //                 showConfirmButton: false,
-                        //                 timer: 1500
-                        //             });
-                        //             navigate('/');
-                        //         }
-                        // })
+                        axiosPublic.post('/employees', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('employee added to the database')
+                                    reset();
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'employee created successfully.',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/');
+                                }
+                        })
 
 
                     })
                     .catch(error => console.log(error))
             })
+
+        }
+            
+            
+
+        
     };
 
     return (
@@ -93,20 +119,21 @@ const Register = () => {
                                     selected={startDate}
                                     onChange={(date) => setStartDate(date)}
                                     className="input input-bordered w-full"
-                                    
-                                    
+
+
                                 />
-                                
+
                             </div>
 
 
-                            <div className="form-control">
+                            <div className="form-control w-full my-6">
                                 <label className="label">
-                                    <span className="label-text">Photo URL</span>
+                                    <span className="label-text">photo</span>
                                 </label>
-                                <input type="text"  {...register("photoURL", { required: true })} placeholder="Photo URL" className="input input-bordered" />
-                                {errors.photoURL && <span className="text-red-600">Photo URL is required</span>}
+                                <input {...register('image', { required: true })} type="file" className="file-input w-full max-w-xs" />
+
                             </div>
+
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>

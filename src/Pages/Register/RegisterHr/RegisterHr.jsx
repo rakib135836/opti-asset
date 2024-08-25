@@ -75,7 +75,8 @@ const RegisterHr = () => {
                             birthDate:startDate,
                             Logo:companyLogo,
                             Photo:hrPhoto,
-                            email: data.email
+                            email: data.email,
+                            identity:'hr'
                         }
                         axiosPublic.post('/hrs', userInfo)
                             .then(res => {
