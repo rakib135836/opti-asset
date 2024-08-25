@@ -6,6 +6,21 @@ import Home from "../Pages/Home/Home/Home";
 import Register from "../Pages/Register/Register";
 import RegisterHr from "../Pages/Register/RegisterHr/RegisterHr";
 import Login from "../Pages/Login/Login";
+import Dashboard from "../Layout/Dashboard";
+import EmployeeHome from "../Pages/Dashboard/Employee/EmployeeHome";
+import MyAsset from "../Pages/Dashboard/Employee/MyAsset";
+import RequestForAnAsset from "../Pages/Dashboard/Employee/RequestForAnAsset";
+import MyTeam from "../Pages/Dashboard/Employee/MyTeam";
+import EmployeeProfile from "../Pages/Dashboard/Employee/EmployeeProfile";
+import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
+import AssetList from "../Pages/Dashboard/Admin/AssetList";
+import AddAnAsset from "../Pages/Dashboard/Admin/AddAnAsset";
+import AllRequests from "../Pages/Dashboard/Admin/AllRequests";
+import CoustomRequestList from "../Pages/Dashboard/Admin/CoustomRequestList";
+import MyEmployeeList from "../Pages/Dashboard/Admin/MyEmployeeList";
+import AddAnEmployee from "../Pages/Dashboard/Admin/AddAnEmployee";
+import Profile from "../Pages/Dashboard/Admin/Profile";
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -33,4 +48,69 @@ import Login from "../Pages/Login/Login";
         },
       ]
     },
+    {
+      path:'dashboard',
+      element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+      // todo:need to create private route 
+      children:[
+
+        // normal employee routes
+        {
+          path: 'userHome',
+          element:<EmployeeHome></EmployeeHome>
+        },
+        {
+          path: 'myAsset',
+          element: <MyAsset></MyAsset>
+        },
+        {
+          path: 'assetRequest',
+          element: <RequestForAnAsset></RequestForAnAsset>
+        },
+        {
+          path: 'myTeam',
+          element: <MyTeam></MyTeam>
+        },
+        {
+          path: 'employeeProfile',
+          element: <EmployeeProfile></EmployeeProfile>
+        },
+
+        // admin only routes
+        // todo:need to create admin route 
+
+        {
+          path: 'adminHome',
+          element: <AdminHome></AdminHome>
+        },
+        {
+          path: 'assetList',
+          element: <AssetList></AssetList>
+        },
+        {
+          path: 'addAsset',
+          element: <AddAnAsset></AddAnAsset>
+        },
+        {
+          path: 'allRequests',
+          element: <AllRequests></AllRequests>
+        },
+        {
+          path: 'coustomRequests',
+          element:<CoustomRequestList></CoustomRequestList>
+        },
+        {
+          path: 'employeeList',
+          element: <MyEmployeeList></MyEmployeeList>
+        },
+        {
+          path: 'addEmployee',
+          element: <AddAnEmployee></AddAnEmployee>
+        },
+        {
+          path: 'adminProfile',
+          element: <Profile></Profile>
+        },
+      ]
+    }
   ]);
