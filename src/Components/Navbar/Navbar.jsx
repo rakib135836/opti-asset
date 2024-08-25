@@ -30,14 +30,13 @@ const Navbar = () => {
 
             <div className='relative'>
               <div className='flex flex-row items-center gap-3'>
-                {/* Become A Host btn */}
+                {/* Dash Board btn */}
                 <div className='hidden md:block'>
-                  {!user && (
+                  {user && (
                     <button
-                      disabled={!user}
-                      className='disabled:cursor-not-allowed text-blue-500 cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition'
+                      className='text-blue-500 cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full transition'
                     >
-                      Host your home
+                      Dash Board
                     </button>
                   )}
                 </div>
