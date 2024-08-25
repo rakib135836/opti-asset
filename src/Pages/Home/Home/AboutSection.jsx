@@ -16,9 +16,9 @@ const AboutSection = () => {
 
                     <div className="grid grid-cols-1 gap-8 mt-8 lg:grid-cols-2">
                         <div>
-                            <img className="relative z-10 object-cover w-full rounded-md h-96" src="https://images.unsplash.com/photo-1644018335954-ab54c83e007f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="" />
+                            <img className="relative z-10 object-cover w-full  rounded-md h-96" src="https://i.ibb.co/2Sf764B/undraw-Content-structure-re-ebkv.png" alt="" />
 
-                            <div className="relative z-20 max-w-md p-6 mx-auto -mt-20 bg-white rounded-md shadow dark:bg-gray-900">
+                            <div className="relative z-20 max-w-md p-6 mx-auto -mt-20 bg-blue-100 rounded-md shadow dark:bg-gray-900">
                                 <h1 href="#" className="font-semibold text-gray-800 hover:underline dark:text-white md:text-xl">
                                     Track Assets & Manage Products
                                 </h1>
@@ -33,9 +33,9 @@ const AboutSection = () => {
                         </div>
 
                         <div>
-                            <img className="relative z-10 object-cover w-full rounded-md h-96" src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="" />
+                            <img className="relative z-10 object-cover w-full  rounded-md h-96" src="https://i.ibb.co/1bXVCnJ/undraw-subscriptions-re-k7jj.png" alt="" />
 
-                            <div className="relative z-20 max-w-lg p-6 mx-auto -mt-20 bg-white rounded-md shadow dark:bg-gray-900">
+                            <div className="relative z-20 max-w-lg p-6 mx-auto -mt-20 bg-blue-100  rounded-md shadow dark:bg-gray-900">
                                 <h1 href="#" className="font-semibold text-gray-800 hover:underline dark:text-white md:text-xl">
                                     Subscription-Based
                                 </h1>

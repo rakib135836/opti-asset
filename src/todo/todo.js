@@ -1,0 +1,1 @@
+// 1.uncomment password validation from register page 

@@ -1,42 +1,45 @@
-// import Container from '../Navbar/Container'
+
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-// import useAuth from '../../../hooks/useAuth'
-// import avatarImg from '../../../assets/images/placeholder.jpg'
+import avatarImg from '../../assets/placeholder.jpg'
+import useAuth from '../../hooks/useAuth'
+import Container from './Container'
 
 const Navbar = () => {
-  // const { user, logOut } = useAuth()
+  const { user, logOut } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-
-    <div className='sticky top-0 bg-white z-50 shadow-sm' >
-      <div className='py-4 '>
-        <div>
-          <div className='flex flex-row  items-center justify-between gap-3 md:gap-0'>
-
+    <div className='  sticky top-0 bg-white z-50 shadow-sm'>
+      <div className='py-4  '>
+        <Container>
+          <div className='bg-gradient-to-r from-blue-100 to-blue-50 rounded-md flex flex-row  items-center justify-between gap-3 md:gap-0'>
             {/* Logo */}
 
             <Link to='/'>
-
-             <h1 className='text-bold text-2xl'><span className='text-3xl text-orange-600'>O</span >pti <span  className='text-3xl text-orange-600'>A</span>sset</h1>
-
+              <img
+                // className='hidden md:block'
+                src='https://i.ibb.co/YL8gFmd/black-white-Thunder-logo.png'
+                alt='logo'
+                width='100'
+                height='100'
+              />
             </Link>
-
             {/* Dropdown Menu */}
+
             <div className='relative'>
               <div className='flex flex-row items-center gap-3'>
                 {/* Become A Host btn */}
-                <div >
-                  {/* {!user && (
-                     <button
-                       disabled={!user}
-                       className='disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition'
-                     >
-                       Host your home
-                     </button>
-                   )} */}
+                <div className='hidden md:block'>
+                  {!user && (
+                    <button
+                      disabled={!user}
+                      className='disabled:cursor-not-allowed text-blue-500 cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition'
+                    >
+                      Host your home
+                    </button>
+                  )}
                 </div>
                 {/* Dropdown btn */}
                 <div
@@ -49,7 +52,7 @@ const Navbar = () => {
                     <img
                       className='rounded-full'
                       referrerPolicy='no-referrer'
-                      //    src={user && user.photoURL ? user.photoURL : avatarImg}
+                      src={user && user.photoURL ? user.photoURL : avatarImg}
                       alt='profile'
                       height='30'
                       width='30'
@@ -67,40 +70,59 @@ const Navbar = () => {
                       Home
                     </Link>
 
-                    {/* {user ? (
-                       <>
-                         <div
-                           onClick={logOut}
-                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
-                         >
-                           Logout
-                         </div>
-                       </>
-                     ) : (
-                       <>
-                         <Link
-                           to='/login'
-                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
-                         >
-                           Login
-                         </Link>
-                         <Link
-                           to='/signup'
-                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
-                         >
-                           Sign Up
-                         </Link>
-                       </>
-                     )} */}
+                    {user ? (
+                      <>
+                        <div
+                          onClick={logOut}
+                          className=' text-blue-500 px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
+                        >
+                          Logout
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* home link  */}
+                        <Link
+                          to='/'
+                          className='text-blue-500 px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                        >
+                          Home
+                        </Link>
+
+                        {/* employee register */}
+                        <Link
+                          to='/register'
+                          className='text-blue-500 px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                        >
+                          Join As employee
+                        </Link>
+
+                        {/* hr register */}
+                        <Link
+                          to='/register-hr'
+                          className='text-blue-500 px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                        >
+                          Join As Hr Manager
+                        </Link>
+
+                        {/* login */}
+                        <Link
+                          to='/login'
+                          className='text-blue-500 px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                        >
+                          Login
+                        </Link>
+                      </>
+                    )}
                   </div>
                 </div>
               )}
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     </div>
   )
-};
+}
 
-export default Navbar;
+export default Navbar

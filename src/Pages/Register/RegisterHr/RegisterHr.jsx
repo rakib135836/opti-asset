@@ -1,27 +1,28 @@
 
 
-import { useContext } from "react";
+
+
+
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../providers/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2'
-import SocialLogin from "../../Components/SocialLogin/SocilaLogin";
+// import Swal from 'sweetalert2'
+// import SocialLogin from "../../Components/SocialLogin/SocilaLogin";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 // import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
-
-// date picker
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 
-const Register = () => {
+const RegisterHr = () => {
     // const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { createUser, updateUserProfile } = useContext(AuthContext);
+    // const { createUser, updateUserProfile } = useContext(AuthContext);
+    const {createUser,updateUserProfile}=useAuth();
     const navigate = useNavigate();
     const [startDate, setStartDate] = useState(new Date());
 
@@ -52,7 +53,7 @@ const Register = () => {
                         //             });
                         //             navigate('/');
                         //         }
-                        // })
+                            // })
 
 
                     })
@@ -63,18 +64,16 @@ const Register = () => {
     return (
         <>
             <Helmet>
-                <title>opti-asset | employee register</title>
+                <title>opti-asset |Hr Manager Register</title>
             </Helmet>
-
             <div className="hero min-h-screen bg-blue-100">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
-                        <h1 className="text-5xl font-bold">Register as an Employee</h1>
+                        <h1 className="text-5xl font-bold">Register as an Hr Manager</h1>
                         <img className="rounded-md" src="https://i.ibb.co/fkVMJ3T/undraw-Sign-up-n6im.png" alt="" />
                     </div>
 
-
-
+                    
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                             <div className="form-control">
@@ -83,6 +82,14 @@ const Register = () => {
                                 </label>
                                 <input type="text"  {...register("name", { required: true })} name="name" placeholder="Name" className="input input-bordered" />
                                 {errors.name && <span className="text-red-600">Name is required</span>}
+                            </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Company Name</span>
+                                </label>
+                                <input type="text"  {...register("CompanyName", { required: true })} name="CompanyName" placeholder="Name" className="input input-bordered" />
+                                {errors.name && <span className="text-red-600">CompanyName is required</span>}
                             </div>
 
                             <div className="form-control">
@@ -99,14 +106,22 @@ const Register = () => {
                                 
                             </div>
 
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Company logo</span>
+                                </label>
+                                <input type="text"  {...register("CompanyLogo", { required: true })} placeholder="Photo URL" className="input input-bordered" />
+                                {errors.photoURL && <span className="text-red-600">company logo is   required</span>}
+                            </div>
 
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Photo URL</span>
+                                    <span className="label-text">HR photo</span>
                                 </label>
-                                <input type="text"  {...register("photoURL", { required: true })} placeholder="Photo URL" className="input input-bordered" />
-                                {errors.photoURL && <span className="text-red-600">Photo URL is required</span>}
+                                <input type="text"  {...register("HrPhoto", { required: true })} placeholder="Photo URL" className="input input-bordered" />
+                                {errors.photoURL && <span className="text-red-600">hr photo is required</span>}
                             </div>
+
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
@@ -128,14 +143,14 @@ const Register = () => {
                                 {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
                                 {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 20 characters</p>}
                                 {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one Uppercase one lower case, one number and one special character.</p>} */}
-
+                                
                             </div>
                             <div className="form-control mt-6">
                                 <input className="btn btn-primary" type="submit" value="Sign Up" />
                             </div>
                         </form>
-                        <p className="px-6"><small>Already have an account <Link to="/login" className="text-blue-500">Login</Link></small></p>
-                        <SocialLogin></SocialLogin>
+                        <p className="px-6"><small>Already have an account <Link to="/login"className="text-blue-500">Login</Link></small></p>
+                        {/* <SocialLogin></SocialLogin> */}
                     </div>
                 </div>
             </div>
@@ -143,4 +158,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default RegisterHr;
