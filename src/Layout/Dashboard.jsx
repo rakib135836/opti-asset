@@ -1,25 +1,44 @@
-import { FaAd, FaBook, FaCalendar, FaEnvelope, FaHome, FaList, FaSearch, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
+import { FaAd, FaBook, FaCalendar, FaHome, FaList, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import useHr from '../hooks/useHr';
+import useAuth from "../hooks/useAuth";
 
-import useAdmin from "../hooks/useAdmin";
-// to do create a useAdmin 
 
 
 const Dashboard = () => {
 
 
-    // TODO: get isAdmin value from the database
-    const [isAdmin] = useAdmin();
+    const { logOut } = useAuth();
+    const [hrData] = useHr();
+
 
     return (
         <div className="flex">
             {/* dashboard side bar */}
-            <div className="w-64 min-h-screen bg-orange-400">
+            <div className="w-64 min-h-screen bg-custom-image">
                 <ul className="menu p-4">
                     {
-                        isAdmin ? <>
+                        hrData ? <>
                             <li>
-                                logo
+                                {hrData?.logo ? (
+                                    <div className="">
+                                        <div className="w-24 h-24 rounded">
+                                            <img
+                                                src={hrData.logo}
+                                                alt=""
+                                                className="object-contain w-full h-full"
+                                            />
+                                        </div>
+                                    </div>
+
+
+                                ) : (
+                                    <div className="avatar">
+                                        <div className="w-24 rounded">
+                                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Default Avatar" />
+                                        </div>
+                                    </div>
+                                )}
                             </li>
                             <li>
                                 <NavLink to="/dashboard/adminHome">
@@ -62,14 +81,25 @@ const Dashboard = () => {
                                     profile</NavLink>
                             </li>
                             <li>
-                                logged in user photo and name
+                                <div className="flex justify-between">
+                                    <div className="avatar">
+                                        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden">
+                                            <img src={hrData.photo} className="w-full h-full object-cover" alt="Avatar" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p className="text-white">{hrData.name}</p>
+                                    </div>
+                                </div>
                             </li>
                             <li>
-                                logout button
+                                <button onClick={logOut} className="btn btn-outline ">LogOut</button>
                             </li>
                         </>
                             :
                             <>
+
                                 <li>
                                     <NavLink to="/dashboard/userHome">
                                         <FaHome></FaHome>
@@ -114,7 +144,7 @@ const Dashboard = () => {
                 </ul>
             </div>
             {/* dashboard content */}
-            <div className="flex-1 p-8">
+            <div className="flex-1 p-8 bg-blue-50">
                 <Outlet></Outlet>
             </div>
         </div>

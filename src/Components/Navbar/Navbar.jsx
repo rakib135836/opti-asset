@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom'
 import avatarImg from '../../assets/placeholder.jpg'
 import useAuth from '../../hooks/useAuth'
 import Container from './Container'
+import useHr from '../../hooks/useHr'
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
+  const [isHr] = useHr();
 
   return (
     <div className='  sticky top-0 bg-white z-50 shadow-sm'>
@@ -31,15 +33,28 @@ const Navbar = () => {
             <div className='relative'>
               <div className='flex flex-row items-center gap-3'>
                 {/* Dash Board btn */}
+
                 <div className='hidden md:block'>
-                  {user && (
-                    <button
-                      className='text-blue-500 cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full transition'
-                    >
-                      Dash Board
-                    </button>
+                  {user && isHr && (
+                    <Link to='/dashboard/adminHome'>
+                      <button
+                        className='text-blue-500 cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full transition'
+                      >
+                       Dash Board
+                      </button>
+                    </Link>
+                  )}
+                  {user && !isHr && (
+                    <Link to='/dashboard/userHome'>
+                      <button
+                        className='text-blue-500 cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full transition'
+                      >
+                       Dash Board
+                      </button>
+                    </Link>
                   )}
                 </div>
+
                 {/* Dropdown btn */}
                 <div
                   onClick={() => setIsOpen(!isOpen)}
@@ -111,6 +126,7 @@ const Navbar = () => {
                         >
                           Login
                         </Link>
+
                       </>
                     )}
                   </div>
@@ -125,3 +141,5 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+

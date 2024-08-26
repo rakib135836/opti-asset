@@ -73,8 +73,8 @@ const RegisterHr = () => {
                             name: data.name,
                             companyName:data.companyName,
                             birthDate:startDate,
-                            Logo:companyLogo,
-                            Photo:hrPhoto,
+                            logo:companyLogo,
+                            photo:hrPhoto,
                             email: data.email,
                             identity:'hr'
                         }

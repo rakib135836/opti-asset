@@ -8,7 +8,10 @@ export default {
     extend: {
       fontFamily: {
         Poppins: '"Poppins", sans-serif'
-      }
+      },
+      backgroundImage: {
+        'custom-image': "url(https://i.ibb.co/jJT5XZZ/Cute-Colorful-Abstract-Blank-Background-Instagram-Story.png)",
+      },
     },
   },
   plugins: [require('daisyui'),],
