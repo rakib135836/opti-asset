@@ -21,6 +21,7 @@ import MyEmployeeList from "../Pages/Dashboard/Admin/MyEmployeeList";
 import AddAnEmployee from "../Pages/Dashboard/Admin/AddAnEmployee";
 import Profile from "../Pages/Dashboard/Admin/Profile";
 import PrivateRoute from "./PrivateRoute";
+import UpdateAsset from "../Pages/Dashboard/Admin/UpdateAsset";
 
 
 
@@ -86,6 +87,11 @@ import PrivateRoute from "./PrivateRoute";
         {
           path: 'assetList',
           element: <AssetList></AssetList>
+        },
+        {
+          path: 'updateAsset/:id',
+          element: <UpdateAsset></UpdateAsset>,
+          loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}assets/${params.id}`)
         },
         {
           path: 'addAsset',

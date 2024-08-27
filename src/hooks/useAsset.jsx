@@ -1,4 +1,4 @@
-// api, axios (axios secure), tan stack 
+
 
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
@@ -10,7 +10,7 @@ const useAsset = () => {
     const { refetch, data: asset = [] } = useQuery({
         queryKey: ['asset', hrData?.email],
         queryFn: async() => {
-            const res = await axiosSecure.get(`/assets?email=${hrData.email}`);
+            const res = await axiosSecure.get(`/assets?email=${hrData?.email}`);
             return res.data;
         }
     })
