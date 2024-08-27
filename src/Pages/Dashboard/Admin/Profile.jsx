@@ -1,10 +1,15 @@
+import { Helmet } from "react-helmet-async";
 import useHr from "../../../hooks/useHr";
 
 const Profile = () => {
     const [hrData] = useHr();
 
     return (
+
         <div className="flex items-center justify-center min-h-screen">
+            <Helmet>
+                <title>opti-asset | profile</title>
+            </Helmet>
             <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
                 <img
                     className="object-fill object-center w-full h-56"
@@ -58,7 +63,10 @@ const Profile = () => {
                         </svg>
 
                         <h1 className="px-2 text-sm">{hrData?.email || "patterson@example.com"}</h1>
+                        
                     </div>
+                    <button className="btn bg-blue-400 w-full py-2"> update </button>
+                    {/* todo update functionality  */}
                 </div>
             </div>
         </div>

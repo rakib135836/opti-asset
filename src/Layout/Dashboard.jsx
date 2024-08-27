@@ -1,4 +1,8 @@
-import { FaAd, FaBook, FaCalendar, FaHome, FaList, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
+import { FaBook, FaCalendar, FaHome, FaList, FaUsers } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { IoIosPersonAdd } from "react-icons/io";
+import { IoGitPullRequestSharp } from "react-icons/io5";
+import { GiMaterialsScience } from "react-icons/gi";
 import { NavLink, Outlet } from "react-router-dom";
 import useHr from '../hooks/useHr';
 import useAuth from "../hooks/useAuth";
@@ -47,7 +51,7 @@ const Dashboard = () => {
                             </li>
                             <li>
                                 <NavLink to="/dashboard/assetList">
-                                    <FaUtensils></FaUtensils>
+                                    <GiMaterialsScience />
                                     Asset List</NavLink>
                             </li>
                             <li>
@@ -62,7 +66,7 @@ const Dashboard = () => {
                             </li>
                             <li>
                                 <NavLink to="/dashboard/coustomRequests">
-                                    <FaUsers></FaUsers>
+                                    <IoGitPullRequestSharp />
                                     Coustom requests list</NavLink>
                             </li>
                             <li>
@@ -72,12 +76,12 @@ const Dashboard = () => {
                             </li>
                             <li>
                                 <NavLink to="/dashboard/addEmployee">
-                                    <FaUsers></FaUsers>
+                                    <IoIosPersonAdd />
                                     Add an employee</NavLink>
                             </li>
                             <li>
                                 <NavLink to="/dashboard/adminProfile">
-                                    <FaUsers></FaUsers>
+                                    <CgProfile />
                                     profile</NavLink>
                             </li>
                             <li>
@@ -112,24 +116,24 @@ const Dashboard = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/assetRequest">
-                                        <FaShoppingCart></FaShoppingCart>
+                                        <IoGitPullRequestSharp />
                                         Request for an asset </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/myTeam">
-                                        <FaAd></FaAd>
+                                        <FaUsers></FaUsers>
                                         My team</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/employeeProfile">
-                                        <FaUsers></FaUsers>
+                                        <CgProfile />
                                         profile</NavLink>
                                 </li>
                                 <li>
                                     logged in user photo and name
                                 </li>
                                 <li>
-                                    logout button
+                                    <button onClick={logOut} className="btn btn-outline ">LogOut</button>
                                 </li>
                             </>
                     }
