@@ -55,7 +55,7 @@ const UpdateAsset = () => {
             <div className="hero min-h-screen bg-blue-100">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
-                        <h1 className="text-5xl font-bold">Update Asset</h1>
+                        <h1 className="text-5xl font-bold">Update Asset- <span className="text-blue-500 ">{name}</span></h1>
                         <img className="rounded-md" src="https://i.ibb.co/fkVMJ3T/undraw-Sign-up-n6im.png" alt="" />
                     </div>
 

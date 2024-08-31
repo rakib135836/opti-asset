@@ -22,6 +22,7 @@ import AddAnEmployee from "../Pages/Dashboard/Admin/AddAnEmployee";
 import Profile from "../Pages/Dashboard/Admin/Profile";
 import PrivateRoute from "./PrivateRoute";
 import UpdateAsset from "../Pages/Dashboard/Admin/UpdateAsset";
+import HrRoute from "./HrRoute";
 
 
 
@@ -82,24 +83,24 @@ import UpdateAsset from "../Pages/Dashboard/Admin/UpdateAsset";
 
         {
           path: 'adminHome',
-          element: <AdminHome></AdminHome>
+          element: <HrRoute><AdminHome></AdminHome></HrRoute>
         },
         {
           path: 'assetList',
-          element: <AssetList></AssetList>
+          element: <HrRoute><AssetList></AssetList></HrRoute>
         },
         {
           path: 'updateAsset/:id',
-          element: <UpdateAsset></UpdateAsset>,
+          element: <HrRoute><UpdateAsset></UpdateAsset></HrRoute>,
           loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}assets/${params.id}`)
         },
         {
           path: 'addAsset',
-          element: <AddAnAsset></AddAnAsset>
+          element: <HrRoute><AddAnAsset></AddAnAsset></HrRoute>
         },
         {
           path: 'allRequests',
-          element: <AllRequests></AllRequests>
+          element: <HrRoute><AllRequests></AllRequests></HrRoute>
         },
         {
           path: 'coustomRequests',
@@ -107,15 +108,15 @@ import UpdateAsset from "../Pages/Dashboard/Admin/UpdateAsset";
         },
         {
           path: 'employeeList',
-          element: <MyEmployeeList></MyEmployeeList>
+          element: <HrRoute><MyEmployeeList></MyEmployeeList></HrRoute>
         },
         {
           path: 'addEmployee',
-          element: <AddAnEmployee></AddAnEmployee>
+          element: <HrRoute><AddAnEmployee></AddAnEmployee></HrRoute>
         },
         {
           path: 'adminProfile',
-          element: <Profile></Profile>
+          element: <HrRoute><Profile></Profile></HrRoute>
         },
       ]
     }
