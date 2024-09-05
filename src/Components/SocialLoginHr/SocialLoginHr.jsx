@@ -16,7 +16,12 @@ const SocialLoginHr = () => {
             console.log(result.user);
             const userInfo = {
                 name: result.user?.displayName,
-                email: result.user?.email,                
+                email: result.user?.email,
+                companyName:'',
+                birthDate:'',
+                logo:'',
+                employees:[],
+                status:'',                
                 photo: result.user?.photoURL,
                 identity:'hr'
             }

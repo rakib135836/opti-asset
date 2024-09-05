@@ -23,6 +23,7 @@ import Profile from "../Pages/Dashboard/Admin/Profile";
 import PrivateRoute from "./PrivateRoute";
 import UpdateAsset from "../Pages/Dashboard/Admin/UpdateAsset";
 import HrRoute from "./HrRoute";
+import Payment from "../Components/Payment";
 
 
 
@@ -48,6 +49,12 @@ import HrRoute from "./HrRoute";
           path:'/login',
           element:<Login></Login>
         },
+        {
+          path:'/payment/:id',
+          element:<Payment></Payment>,
+          loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}subscriptions/${params.id}`)
+        },
+
       ]
     },
     {
