@@ -19,7 +19,8 @@ const SocialLogin = () => {
                     photo: result.user?.photoURL,
                     identity: 'employee',
                     status: '',
-                    hrEmail: ''
+                    hrEmail: '',
+                    logo:'',
                 }
                 axiosPublic.post('/employees', userInfo)
                     .then(res => {

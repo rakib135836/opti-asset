@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from 'sweetalert2';
+import useHr from '../../../hooks/useHr';
 
 
 
@@ -10,7 +11,8 @@ import Swal from 'sweetalert2';
 
 const AddAnEmployee = () => {
     
-    
+    const [hrData]=useHr();
+    const logo=hrData?.logo;
     const axiosSecure = useAxiosSecure();
     const {refetch, data: employees = [] } = useQuery({
         queryKey: ['not-affiliated'],
@@ -38,7 +40,7 @@ const AddAnEmployee = () => {
     const handleAddEmployees = async () => {
         const employeeIds = selectedEmployees.map(emp => emp.value);
         try {
-           await axiosSecure.post('/add-employees-to-hr', { employeeIds });
+           await axiosSecure.post('/add-employees-to-hr', { employeeIds,logo });
 
            Swal.fire({
             icon: 'success',

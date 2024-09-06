@@ -6,6 +6,7 @@ import { GiMaterialsScience } from "react-icons/gi";
 import { NavLink, Outlet } from "react-router-dom";
 import useHr from '../hooks/useHr';
 import useAuth from "../hooks/useAuth";
+import useAffiliated from "../hooks/useAffiliated";
 
 
 
@@ -14,6 +15,7 @@ const Dashboard = () => {
 
     const { logOut } = useAuth();
     const [hrData] = useHr();
+    const [affiliated] = useAffiliated();
 
 
     return (
@@ -104,6 +106,31 @@ const Dashboard = () => {
                             :
                             <>
 
+                                {affiliated ?.logo? (
+                                    <div className="">
+                                        <div className="w-24 h-24 rounded">
+                                            <img
+                                                src={affiliated.logo}
+                                                alt=""
+                                                className="object-contain w-full h-full"
+                                            />
+                                        </div>
+                                    </div>
+
+
+                                ) : (
+                                    <div className="avatar">
+                                        <div className="w-24 rounded">
+                                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" 
+                                            alt="Default Avatar" 
+
+                                            className="object-contain w-full h-full"
+
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
                                 <li>
                                     <NavLink to="/dashboard/userHome">
                                         <FaHome></FaHome>
@@ -130,8 +157,18 @@ const Dashboard = () => {
                                         profile</NavLink>
                                 </li>
                                 <li>
-                                    logged in user photo and name
-                                </li>
+                                <div className="flex justify-between">
+                                    <div className="avatar">
+                                        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden">
+                                            <img src={affiliated?.photo} className="w-full h-full object-cover" alt="Avatar" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p className="text-white">{affiliated?.name}</p>
+                                    </div>
+                                </div>
+                            </li>
                                 <li>
                                     <button onClick={logOut} className="btn btn-outline ">LogOut</button>
                                 </li>

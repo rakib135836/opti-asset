@@ -57,7 +57,8 @@ const Register = () => {
                             photo:imageURL,
                             identity:'employee',
                             status:'',
-                            hrEmail:''
+                            hrEmail:'',
+                            logo:'',
 
                         }
                         axiosPublic.post('/employees', userInfo)
