@@ -24,6 +24,7 @@ import PrivateRoute from "./PrivateRoute";
 import UpdateAsset from "../Pages/Dashboard/Admin/UpdateAsset";
 import HrRoute from "./HrRoute";
 import Payment from "../Components/Payment";
+import PaidRoute from "./PaidRoute";
 
 
 
@@ -60,7 +61,7 @@ import Payment from "../Components/Payment";
     {
       path:'dashboard',
       element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
-      // todo:need to create private route 
+     
       children:[
 
         // normal employee routes
@@ -86,8 +87,7 @@ import Payment from "../Components/Payment";
         },
 
         // admin only routes
-        // todo:need to create admin route 
-
+       
         {
           path: 'adminHome',
           element: <HrRoute><AdminHome></AdminHome></HrRoute>
@@ -119,7 +119,7 @@ import Payment from "../Components/Payment";
         },
         {
           path: 'addEmployee',
-          element: <HrRoute><AddAnEmployee></AddAnEmployee></HrRoute>
+          element: <PaidRoute><AddAnEmployee></AddAnEmployee></PaidRoute>
         },
         {
           path: 'adminProfile',

@@ -55,7 +55,9 @@ const Register = () => {
                             email: data.email,
                             birthDate:startDate,
                             photo:imageURL,
-                            identity:'employee'
+                            identity:'employee',
+                            status:'',
+                            hrEmail:''
 
                         }
                         axiosPublic.post('/employees', userInfo)

@@ -2,10 +2,17 @@ import { useState } from 'react';
 import Select from 'react-select';
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from 'sweetalert2';
+
+
+
+
 
 const AddAnEmployee = () => {
+    
+    
     const axiosSecure = useAxiosSecure();
-    const { data: employees = [] } = useQuery({
+    const {refetch, data: employees = [] } = useQuery({
         queryKey: ['not-affiliated'],
         queryFn: async () => {
             const res = await axiosSecure.get('/employees');
@@ -31,10 +38,29 @@ const AddAnEmployee = () => {
     const handleAddEmployees = async () => {
         const employeeIds = selectedEmployees.map(emp => emp.value);
         try {
-            await axiosSecure.post('/add-employees-to-hr', { employeeIds });
+           await axiosSecure.post('/add-employees-to-hr', { employeeIds });
+
+           Swal.fire({
+            icon: 'success',
+            title: 'Employees Added!',
+            text: 'The selected employees have been added successfully.',
+            confirmButtonText: 'OK'
+        });
+
+
+            refetch();
+        setSelectedEmployees([]);
+        
             // Optionally update UI, reset selection, etc.
         } catch (error) {
             console.error('Error adding employees:', error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to Add Employees',
+                text: 'There was an issue adding the employees. Please try again.',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
