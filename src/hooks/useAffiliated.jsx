@@ -15,7 +15,7 @@ const useAffiliated = () => {
 
             console.log('Fetching affiliated for user', user);
             try {
-                const res = await axiosSecure.get(`employees/${user.email}`);
+                const res = await axiosSecure.get(`/employees/${user.email}`);
                 console.log(' affiliated fetched:', res.data);
                 return res.data;
             } catch (error) {

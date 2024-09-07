@@ -25,6 +25,7 @@ import UpdateAsset from "../Pages/Dashboard/Admin/UpdateAsset";
 import HrRoute from "./HrRoute";
 import Payment from "../Components/Payment";
 import PaidRoute from "./PaidRoute";
+import RequestedAsset from "../Pages/Dashboard/Employee/RequestedAsset";
 
 
 
@@ -72,6 +73,10 @@ import PaidRoute from "./PaidRoute";
         {
           path: 'myAsset',
           element: <MyAsset></MyAsset>
+        },
+        {
+          path: 'requestedAsset',
+          element: <RequestedAsset></RequestedAsset>
         },
         {
           path: 'assetRequest',

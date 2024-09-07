@@ -142,6 +142,11 @@ const Dashboard = () => {
                                         My asset</NavLink>
                                 </li>
                                 <li>
+                                    <NavLink to="/dashboard/requestedAsset">
+                                        <FaCalendar></FaCalendar>
+                                        Requested asset</NavLink>
+                                </li>
+                                <li>
                                     <NavLink to="/dashboard/assetRequest">
                                         <IoGitPullRequestSharp />
                                         Request for an asset </NavLink>
