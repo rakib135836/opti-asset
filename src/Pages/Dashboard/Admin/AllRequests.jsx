@@ -11,6 +11,8 @@ const AllRequests = () => {
     const [hrData] = useHr();
     const hrEmail = hrData?.email;
     const axiosSecure = useAxiosSecure();
+    const today = new Date();
+    const addedDate = today.toISOString().split("T")[0];
 
     const {refetch, data: allrequests = [], isLoading } = useQuery({
         queryKey: ['requested-asset', hrEmail],
@@ -24,7 +26,7 @@ const AllRequests = () => {
     const handleApprove = async (id) => {
         try {
            
-            const res = await axiosSecure.patch(`/requested-asset/${id}`);
+            const res = await axiosSecure.patch(`/requested-asset/${id}`, { approvalDate: addedDate });
     
             console.log(res.data)
             if (res.data.modifiedCount ) {
