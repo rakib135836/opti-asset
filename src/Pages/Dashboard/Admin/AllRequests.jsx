@@ -21,9 +21,43 @@ const AllRequests = () => {
         }
     })
 
-    const handleApprove =(id)=>{
-        
-    }
+    const handleApprove = async (id) => {
+        try {
+           
+            const res = await axiosSecure.patch(`/requested-asset/${id}`);
+    
+            console.log(res.data)
+            if (res.data.modifiedCount ) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: 'Approved successfully.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                refetch();
+            } else {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: 'Approval failed.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        } catch (error) {
+            // Handle any errors that occur during the request
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: 'Something went wrong!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            console.error("Error approving request:", error);
+        }
+    };
+    
     const handleReject =(id)=>{
         Swal.fire({
             title: "Are you sure?",
