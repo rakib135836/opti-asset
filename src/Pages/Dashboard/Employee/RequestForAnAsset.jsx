@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAffiliated from "../../../hooks/useAffiliated";
 
 const RequestForAnAsset = () => {
 
@@ -14,36 +15,42 @@ const RequestForAnAsset = () => {
     const { user } = useAuth();
     const name = user?.displayName;
     const email = user?.email;
+    const [affiliated]=useAffiliated();
+    const hrEmail=affiliated?.hrEmail;
 
-    const [selectedAssetId, setSelectedAssetId] = useState();
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedAssetName, setSelectedAssetName] = useState();
+    const [selectedAssetType, setSelectedAssetType] = useState();
 
 
 
     const { data: assets = [] } = useQuery({
         queryKey: ['asset0-for-request '],
         queryFn: async () => {
-            const res = await axiosSecure.get('/for-request');
+            const res = await axiosSecure.get(`/for-request/${hrEmail}`);
             return res.data;
         }
     });
 
     const onSubmit = (data) => {
         const requesterInfo = {
+            asset:selectedAssetName,
             note: data.note,
             email: email,
             name: name,
             requestedDate: addedDate,
             approvalDate:'',
             status:'pending',
+            assetType: selectedAssetType,
+            hrEmail:hrEmail
 
         };
     
-        axiosSecure.put(`/assets/${selectedAssetId}/request`, requesterInfo)
+        axiosSecure.post('/requested-asset', requesterInfo)
             .then((res) => {
                 // Assuming that the API returns a success message or status
-                if (res.data.message || res.status === 200) {
+                if (res.data.insertedId) {
                     // Close the modal immediately
                     setIsModalOpen(false);
                     reset();
@@ -82,15 +89,14 @@ const RequestForAnAsset = () => {
     };
     
 
-    const openModal = (assetId,assetName) => {
-        setSelectedAssetId(assetId);
+    const openModal = ( assetName, assetType) => {
         setSelectedAssetName(assetName);
-        setIsModalOpen(true);  // Open modal
+        setSelectedAssetType(assetType);  
+        setIsModalOpen(true);
     };
 
     const closeModal = () => {
-        setSelectedAssetId(null);
-        setIsModalOpen(false);  // Close modal
+        setIsModalOpen(false);  
     };
 
 
@@ -139,7 +145,7 @@ const RequestForAnAsset = () => {
                                     <td>
                                         <button
                                             className="btn text-blue-500"
-                                            onClick={() => openModal(item?._id, item?.name)}
+                                            onClick={() => openModal( item?.name,item?.type)}
                                         >
                                             Request
                                         </button>
@@ -163,7 +169,7 @@ const RequestForAnAsset = () => {
                 <dialog open className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box">
                         <h3 className="font-bold text-lg">Request Asset: {selectedAssetName}</h3>
-                        <div className="card flex-shrink-0 w-full max-w-sm bg-blue-100 shadow-2xl bg-base-100">
+                        <div className="card flex-shrink-0 w-full max-w-sm bg-blue-100 shadow-2xl ">
                             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                                 <div className="form-control">
                                     <label className="label">

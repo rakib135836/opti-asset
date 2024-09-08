@@ -15,6 +15,8 @@ const useAsset = () => {
         }
     })
 
+    
+
     return [asset, refetch]
 };
 
