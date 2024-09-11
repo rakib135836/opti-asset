@@ -1,14 +1,64 @@
 import { Helmet } from "react-helmet-async";
 import useHr from "../../../hooks/useHr";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Profile = () => {
-    const [hrData] = useHr();
+    const [hrData,refetch] = useHr();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const axiosSecure=useAxiosSecure();
 
+
+    const onSubmit = (data) => {
+        const updatedName = data.name;
+
+       axiosSecure.patch(`/profile-update/${hrData?._id}`, { name: updatedName })
+            .then((res) => {
+               
+                if (res.data.modifiedCount) {
+                    
+                    setIsModalOpen(false);
+                    reset();
+
+                    // Display success notification
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Request submitted successfully.",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    refetch();
+                } else {
+                    // Handle case where no message or incorrect status
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Unexpected error occurred.",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            })
+           
+    };
+
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
     return (
 
         <div className="flex items-center justify-center min-h-screen">
             <Helmet>
-                <title>opti-asset | profile</title>
+                <title>Hr | profile</title>
             </Helmet>
             <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
                 <img
@@ -63,10 +113,44 @@ const Profile = () => {
                         </svg>
 
                         <h1 className="px-2 text-sm">{hrData?.email || "patterson@example.com"}</h1>
-                        
+
                     </div>
-                    <button className="btn bg-blue-400 w-full py-2"> update </button>
-                    {/* todo update functionality  */}
+                    <button onClick={() => openModal(hrData?._id)} className="btn bg-blue-400 w-full py-2"> update </button>
+
+                    {isModalOpen && (
+                        <dialog open className="modal modal-bottom sm:modal-middle">
+                            <div className="modal-box">
+                                <h3 className="font-bold text-lg">update profile <span className="text-blue-300">{hrData?.name}</span> </h3>
+                                <div className="card flex-shrink-0 w-full max-w-sm bg-blue-100 shadow-2xl ">
+                                    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+                                        <div className="form-control">
+                                            <label className="label">
+                                                <span className="label-text">Name</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                {...register("name", { required: true })}
+                                                placeholder="name"
+                                                className="input input-bordered"
+                                            />
+                                            {errors.name && (
+                                                <span className="text-red-600">name is required</span>
+                                            )}
+                                        </div>
+                                        <div className="form-control mt-6">
+                                            <input className="btn btn-primary" type="submit" value="Update" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className="modal-action">
+                                    <button className="btn" onClick={closeModal}>
+                                        Close Modal
+                                    </button>
+                                </div>
+                            </div>
+                        </dialog>
+                    )}
+
                 </div>
             </div>
         </div>

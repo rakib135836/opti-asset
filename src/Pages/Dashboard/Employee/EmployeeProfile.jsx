@@ -1,10 +1,62 @@
 import { Helmet } from "react-helmet-async";
 import useAffiliated from "../../../hooks/useAffiliated";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 
 const EmployeeProfile = () => {
 
-    const [affiliated]=useAffiliated();
+    const [affiliated,refetch]=useAffiliated();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const axiosSecure=useAxiosSecure();
+
+
+    const onSubmit = (data) => {
+        const updatedName = data.name;
+
+       axiosSecure.patch(`/employee-profile-update/${affiliated?._id}`, { name: updatedName })
+            .then((res) => {
+               
+                if (res.data.modifiedCount) {
+                    
+                    setIsModalOpen(false);
+                    reset();
+                   
+
+                    // Display success notification
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Request submitted successfully.",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                  
+                    refetch();
+                } else {
+                    // Handle case where no message or incorrect status
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Unexpected error occurred.",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            })
+           
+    };
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
     return (
 
 
@@ -22,6 +74,7 @@ const EmployeeProfile = () => {
                 src={affiliated?.photo || "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"}
                 alt="avatar"
             />
+
 
 
 
@@ -71,8 +124,40 @@ const EmployeeProfile = () => {
                     <h1 className="px-2 text-sm">{affiliated?.email || "patterson@example.com"}</h1>
                     
                 </div>
-                <button className="btn bg-blue-400 w-full py-2"> update </button>
-                {/* todo update functionality  */}
+                <button onClick={() => openModal(affiliated?._id)} className="btn bg-blue-400 w-full py-2"> update </button>
+                {isModalOpen && (
+                        <dialog open className="modal modal-bottom sm:modal-middle">
+                            <div className="modal-box">
+                                <h3 className="font-bold text-lg">update profile <span className="text-blue-300">{affiliated?.name}</span> </h3>
+                                <div className="card flex-shrink-0 w-full max-w-sm bg-blue-100 shadow-2xl ">
+                                    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+                                        <div className="form-control">
+                                            <label className="label">
+                                                <span className="label-text">Name</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                {...register("name", { required: true })}
+                                                placeholder="name"
+                                                className="input input-bordered"
+                                            />
+                                            {errors.name && (
+                                                <span className="text-red-600">name is required</span>
+                                            )}
+                                        </div>
+                                        <div className="form-control mt-6">
+                                            <input className="btn btn-primary" type="submit" value="Update" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className="modal-action">
+                                    <button className="btn" onClick={closeModal}>
+                                        Close Modal
+                                    </button>
+                                </div>
+                            </div>
+                        </dialog>
+                    )}
             </div>
         </div>
     </div>

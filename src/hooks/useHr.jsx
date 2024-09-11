@@ -6,7 +6,7 @@ const useHr = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { data: hrData, isLoading: isHrLoading } = useQuery({
+  const { data: hrData,refetch, isLoading: isHrLoading } = useQuery({
     queryKey: ['hrData', user?.email],
     enabled: !loading && !!user?.email,
     queryFn: async () => {
@@ -24,7 +24,7 @@ const useHr = () => {
     }
   });
   const isPaid = hrData?.status === 'paid';
-  return [hrData, isHrLoading, isPaid];
+  return [hrData, isHrLoading, isPaid,refetch];
 };
 
 export default useHr;
