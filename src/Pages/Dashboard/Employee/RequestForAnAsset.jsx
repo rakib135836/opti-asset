@@ -12,6 +12,7 @@ const RequestForAnAsset = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const today = new Date();
     const addedDate = today.toISOString().split("T")[0];
+    const month = today.getMonth() + 1
     const { user } = useAuth();
     const name = user?.displayName;
     const email = user?.email;
@@ -41,6 +42,7 @@ const RequestForAnAsset = () => {
             name: name,
             requestedDate: addedDate,
             approvalDate:'',
+            month:month,
             status:'pending',
             assetType: selectedAssetType,
             hrEmail:hrEmail

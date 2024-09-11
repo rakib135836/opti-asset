@@ -3,7 +3,7 @@
 const CoustomRequestList = () => {
     return (
         <div>
-            coustom requests list 
+           Not mentioned in requirement docs what to do 
         </div>
     );
 };
