@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useHr from "../../../hooks/useHr";
+import { PieChart } from 'react-minimal-pie-chart';
+
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 
 const AdminHome = () => {
@@ -25,6 +29,30 @@ const AdminHome = () => {
             return res.data;
         },
     });
+    const { data: limitedStockItems = [] } = useQuery({
+        queryKey: ['hrHome-limited-Stock-Items', email],
+        enabled: !!email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/limited-stock-items/${email}`);
+            return res.data;
+        },
+    });
+
+    // Fetch Returnable and Not Returnable asset counts
+    const { data: assetTypeCount = [] } = useQuery({
+        queryKey: ['hrHome-asset-type-count', email],
+        enabled: !!email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/asset-type-count/${email}`);
+            return res.data;
+        },
+    });
+
+    const pieChartData = assetTypeCount.map((type) => ({
+        title: type._id, // 'Returnable' or 'Not Returnable'
+        value: type.count, // Count of assets
+        color: type._id === 'Returnable' ? '#4CAF50' : '#F44336', // Choose colors for each type
+    }));
 
     if (isLoading) {
         return <span className="loading loading-spinner text-accent"></span>;
@@ -79,11 +107,42 @@ const AdminHome = () => {
                     )}
                 </div>
 
+
+                {/* Limited Stock Items */}
+                <div className="bg-white p-4 shadow-md rounded-md">
+                    <h2 className="text-xl font-bold pb-2">Limited Stock Items</h2>
+                    {limitedStockItems.length > 0 ? (
+                        <ul>
+                            {limitedStockItems.map((stock) => (
+                                <li key={stock._id} className="py-2">
+                                    {stock.name}: {stock.quantity} left
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No limited stock items available</p>
+                    )}
+                </div>
+
+                <div>
+                    <h2 className="text-xl font-bold pb-2">Asset Type Distribution</h2>
+                    <PieChart
+                        data={pieChartData}
+                        label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value}`} // Display labels
+                        labelStyle={{
+                            fontSize: '5px',
+                            fontFamily: 'sans-serif',
+                        }}
+                        animate
+                    />
+                </div>
+
+
                 {/* Calendar */}
-                {/* <div className="bg-white p-4 shadow-md rounded-md">
+                <div className="bg-white p-4 shadow-md rounded-md">
                     <h2 className="text-xl font-bold pb-2">Calendar</h2>
-                    <Calendar onChange={setValue} value={value} />
-                </div> */}
+                    <Calendar />
+                </div>
 
                 {/* Add Note Section */}
                 <div className="bg-white p-4 shadow-md rounded-md">

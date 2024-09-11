@@ -15,7 +15,7 @@ const AddAnAsset = () => {
         const assetInfo = {
             name: data.name,
             email: hrData?.email,
-            quantity: data.quantity,
+            quantity: parseInt(data.quantity, 10),
             type: data.assetType,
             addedDate: addedDate,
         };
