@@ -1,20 +1,26 @@
 import useEmployeeAssets from "../../../hooks/useEmployeeAssets";
-
-
+import { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; 
 
 const EmployeeHome = () => {
   const { pendingRequests, monthlyRequests, isLoading } = useEmployeeAssets();
+  const [value, setValue] = useState(new Date()); 
+  
 
   if (isLoading) {
     return <span className="loading loading-spinner text-accent"></span>;
   }
 
+  
+  
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center py-4">Employee Home</h1>
-      
+
       {/* Grid layout for side-by-side tables */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
         {/* Pending Requests */}
         <div className="bg-white p-4 shadow-md rounded-md">
           <h2 className="text-xl font-bold pb-2">Pending Requests</h2>
@@ -67,6 +73,28 @@ const EmployeeHome = () => {
           ) : (
             <p>No requests made this month</p>
           )}
+        </div>
+
+        {/* Calendar */}
+        <div className="bg-white p-4 shadow-md rounded-md">
+          <h2 className="text-xl font-bold pb-2">Calendar</h2>
+          <Calendar onChange={setValue} value={value} />
+        </div>
+
+        {/* Add Note Section */}
+        <div className="bg-white p-4 shadow-md rounded-md">
+          <h3 className="text-lg font-semibold">Add a Note</h3>
+          <textarea
+            className="w-full mt-2 p-2 border border-gray-300 rounded-md"
+            placeholder="Write your note here..."
+            rows="4"
+           
+          ></textarea>
+          <button
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Add Note
+          </button>
         </div>
       </div>
     </div>
