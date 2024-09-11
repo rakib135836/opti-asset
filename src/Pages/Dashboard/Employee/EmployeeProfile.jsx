@@ -12,7 +12,7 @@ const EmployeeProfile = () => {
 
 
         <Helmet>
-            <title>opti-asset | profile</title>
+            <title>employee | profile</title>
         </Helmet>
 
 
