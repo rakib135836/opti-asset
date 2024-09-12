@@ -12,6 +12,7 @@ const CheckoutForm = ({ price }) => {
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('')
     const [transactionId, setTransactionId] = useState('');
+    
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
@@ -77,12 +78,15 @@ const CheckoutForm = ({ price }) => {
         else {
             console.log('payment intent', paymentIntent)
             if (paymentIntent.status === 'succeeded') {
-                console.log('transaction id', paymentIntent.id);
+                console.log('transaction id', paymentIntent.id,paymentIntent.amount);
                 setTransactionId(paymentIntent.id);
+                
 
 
                 // now update the payment status 
-                const hrStatusUpdate =await axiosSecure.patch(`/hrs/${id}`);
+                const hrStatusUpdate = await axiosSecure.patch(`/hrs/${id}`, {
+                    paidAmount: paymentIntent.amount
+                });
 
                 if (hrStatusUpdate.data.modifiedCount > 0) {
                     Swal.fire({

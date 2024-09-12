@@ -26,12 +26,14 @@ const MyEmployeeList = () => {
                 axiosSecure.delete(`/hrs/remove-employee/${hrData?.email}/${id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
-                            refetch();
+                            
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
                                 icon: "success"
                             });
+
+                            refetch();
                         }
                     })
             }
@@ -45,7 +47,7 @@ const MyEmployeeList = () => {
                 <title>Hr|  employees</title>
             </Helmet>
 
-            <h1 className="text-2xl font-bold text-center py-4">My Employees</h1>
+        <h1 className="text-2xl font-bold text-center py-4">My Employees ({employees.length})</h1>
 
             <div className="overflow-x-auto">
                 <table className="table">

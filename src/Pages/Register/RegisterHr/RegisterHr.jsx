@@ -79,6 +79,7 @@ const RegisterHr = () => {
                             identity:'hr',
                             employees:[],
                             status:'',
+                            amount:0,
 
                         }
                         axiosPublic.post('/hrs', userInfo)

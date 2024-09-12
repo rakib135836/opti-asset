@@ -24,7 +24,8 @@ const useHr = () => {
     }
   });
   const isPaid = hrData?.status === 'paid';
-  return [hrData, isHrLoading, isPaid,refetch];
+  const paidAmount=hrData?.amount;
+  return [hrData, isHrLoading, isPaid,refetch,paidAmount];
 };
 
 export default useHr;
