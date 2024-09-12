@@ -4,11 +4,16 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import StatementPdf from "../../../Components/StatementPdf";
+import { useState } from "react";
 
 const RequestedAsset = () => {
     const { user } = useAuth();
     const email = user?.email;
     const axiosSecure = useAxiosSecure();
+
+    const [search, setSearch] = useState('');  
+    const [status, setStatus] = useState('');  
+    const [assetType, setAssetType] = useState('');  
 
     const { refetch, data: myrequests = [], isLoading } = useQuery({
         queryKey: ['my-requested-asset', email],
@@ -77,6 +82,20 @@ const RequestedAsset = () => {
         });
     };
 
+    // Filtering Logic: filter the requests based on search, status, and assetType
+    const filteredRequests = myrequests.filter((request) => {
+        // Check if search matches the asset name (case-insensitive)
+        const matchesSearch = request.asset.toLowerCase().includes(search.toLowerCase());
+
+        // Check if status matches (or if no filter is selected, match all statuses)
+        const matchesStatus = status ? request.status === status : true;
+
+        // Check if asset type matches (or if no filter is selected, match all types)
+        const matchesAssetType = assetType ? request.assetType === assetType : true;
+
+        return matchesSearch && matchesStatus && matchesAssetType;
+    });
+
     if (isLoading) {
         return <span className="loading loading-spinner text-accent"></span>;
     }
@@ -84,7 +103,29 @@ const RequestedAsset = () => {
     return (
         <div>
             {myrequests?.length > 0 ? (
+
                 <>
+                    <div className="filters">
+                        <input
+                            type="text"
+                            placeholder="Search by asset name"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}  // Update search state
+                        />
+
+                        <select onChange={(e) => setStatus(e.target.value)} value={status}> 
+                            <option value="">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                        </select>
+
+                        <select onChange={(e) => setAssetType(e.target.value)} value={assetType}>  
+                            <option value="">All Asset Types</option>
+                            <option value="Returnable">Returnable</option>
+                            <option value="Not Returnable">Not Returnable</option>
+                        </select>
+                    </div>
+
                     <h1 className="text-2xl font-bold text-center py-4">My Requests</h1>
                     <div className="overflow-x-auto">
                         <table className="table">
@@ -99,7 +140,8 @@ const RequestedAsset = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {myrequests.map((request) => (
+                                {/* Render filtered requests */}
+                                {filteredRequests.map((request) => (
                                     <tr key={request?._id}>
                                         <td>{request?.asset}</td>
                                         <td>{request?.assetType}</td>
@@ -115,7 +157,7 @@ const RequestedAsset = () => {
                                                     Cancel
                                                 </button>
                                             ) : request?.status === "approved" &&
-                                              request?.assetType === "Not Returnable" ? (
+                                                request?.assetType === "Not Returnable" ? (
                                                 <PDFDownloadLink
                                                     document={<StatementPdf request={request} />}
                                                     fileName={`request-statement-${request?._id}.pdf`}
@@ -124,7 +166,7 @@ const RequestedAsset = () => {
                                                     {({ loading }) => loading ? "Loading..." : "Print"}
                                                 </PDFDownloadLink>
                                             ) : request?.status === "approved" &&
-                                              request?.assetType === "Returnable" ? (
+                                                request?.assetType === "Returnable" ? (
                                                 <button
                                                     onClick={() => handleReturn(request?._id)}
                                                     className="btn bg-blue-400 text-white"
