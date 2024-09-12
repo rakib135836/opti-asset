@@ -4,17 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from 'sweetalert2';
 import useHr from '../../../hooks/useHr';
+import { Helmet } from 'react-helmet-async';
 
 
 
 
 
 const AddAnEmployee = () => {
-    
-    const [hrData]=useHr();
-    const logo=hrData?.logo;
+
+    const [hrData] = useHr();
+    const logo = hrData?.logo;
     const axiosSecure = useAxiosSecure();
-    const {refetch, data: employees = [] } = useQuery({
+    const { refetch, data: employees = [] } = useQuery({
         queryKey: ['not-affiliated'],
         queryFn: async () => {
             const res = await axiosSecure.get('/employees');
@@ -40,19 +41,19 @@ const AddAnEmployee = () => {
     const handleAddEmployees = async () => {
         const employeeIds = selectedEmployees.map(emp => emp.value);
         try {
-           await axiosSecure.post('/add-employees-to-hr', { employeeIds,logo });
+            await axiosSecure.post('/add-employees-to-hr', { employeeIds, logo });
 
-           Swal.fire({
-            icon: 'success',
-            title: 'Employees Added!',
-            text: 'The selected employees have been added successfully.',
-            confirmButtonText: 'OK'
-        });
+            Swal.fire({
+                icon: 'success',
+                title: 'Employees Added!',
+                text: 'The selected employees have been added successfully.',
+                confirmButtonText: 'OK'
+            });
 
 
             refetch();
-        setSelectedEmployees([]);
-        
+            setSelectedEmployees([]);
+
             // Optionally update UI, reset selection, etc.
         } catch (error) {
             console.error('Error adding employees:', error);
@@ -69,7 +70,9 @@ const AddAnEmployee = () => {
     return (
         <div>
 
-
+            <Helmet>
+                <title>Hr| add an employee</title>
+            </Helmet>
             <h1 className='text-2xl font-bold text-center py-5' >Add An Employee</h1>
 
             <h2>Add Employees</h2>

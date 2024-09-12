@@ -5,6 +5,7 @@ import useHr from "../../../hooks/useHr";
 import { ImCross } from "react-icons/im";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const AllRequests = () => {
     const [hrData] = useHr();
@@ -95,8 +96,12 @@ const AllRequests = () => {
 
     return (
         <div>
+
+            <Helmet>
+                <title>Hr| All requests</title>
+            </Helmet>
             <h1 className="text-2xl font-bold text-center py-4">All Requests</h1>
-            
+
             {/* Search Section */}
             <div className="mb-4">
                 <input

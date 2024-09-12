@@ -39,7 +39,7 @@ const AddAnAsset = () => {
     return (
         <>
             <Helmet>
-                <title>opti-asset | add asset</title>
+                <title>hr | add asset</title>
             </Helmet>
 
             <div className="hero min-h-screen bg-blue-100">

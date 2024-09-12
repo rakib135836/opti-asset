@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 
 const MyAsset = () => {
@@ -10,7 +11,7 @@ const MyAsset = () => {
     const axiosSecure = useAxiosSecure();
 
 
-    const {  data: myassets = [], isLoading } = useQuery({
+    const { data: myassets = [], isLoading } = useQuery({
         queryKey: ['my-asset', email],
         enabled: !!email,
         queryFn: async () => {
@@ -25,6 +26,10 @@ const MyAsset = () => {
 
     return (
         <div>
+
+            <Helmet>
+                <title>Employee | My Asset</title>
+            </Helmet>
             {myassets?.length > 0 ? (
                 <>
                     <h1 className="text-2xl font-bold text-center py-4">My Assets</h1>
@@ -35,9 +40,9 @@ const MyAsset = () => {
                                 <tr>
                                     <th>Name</th>
                                     <th>Type</th>
-                                    
+
                                     <th>Status</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,10 +51,10 @@ const MyAsset = () => {
 
                                         <td>{request?.asset}</td>
                                         <td>{request?.assetType}</td>
-                                
+
                                         <td>{request?.status}</td>
 
-                                        
+
                                     </tr>
                                 ))}
                             </tbody>

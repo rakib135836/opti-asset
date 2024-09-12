@@ -2,6 +2,7 @@ import useEmployeeAssets from "../../../hooks/useEmployeeAssets";
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; 
+import { Helmet } from "react-helmet-async";
 
 const EmployeeHome = () => {
   const { pendingRequests, monthlyRequests, isLoading } = useEmployeeAssets();
@@ -16,6 +17,10 @@ const EmployeeHome = () => {
   
   return (
     <div className="container mx-auto p-4">
+
+      <Helmet>
+        <title>Employee | Home</title>
+      </Helmet>
       <h1 className="text-2xl font-bold text-center py-4">Employee Home</h1>
 
       {/* Grid layout for side-by-side tables */}

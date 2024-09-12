@@ -1,13 +1,14 @@
 import Swal from "sweetalert2";
 import useHr from "../../../hooks/useHr";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 
 const MyEmployeeList = () => {
 
-    const [hrData,refetch] = useHr();
+    const [hrData, refetch] = useHr();
     const employees = hrData?.employees;
-    const axiosSecure=useAxiosSecure();
+    const axiosSecure = useAxiosSecure();
 
 
     const handleRemove = id => {
@@ -40,6 +41,10 @@ const MyEmployeeList = () => {
 
         <div>
 
+            <Helmet>
+                <title>Hr|  employees</title>
+            </Helmet>
+
             <h1 className="text-2xl font-bold text-center py-4">My Employees</h1>
 
             <div className="overflow-x-auto">
@@ -51,40 +56,40 @@ const MyEmployeeList = () => {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Action</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
 
                         {
-                            employees.map((employee)=>
+                            employees.map((employee) =>
                                 <tr key={employee?._id}>
-                           
-                            <td>
-                                <div className="flex items-center gap-3">
-                                    <div className="avatar">
-                                        <div className="mask mask-squircle h-12 w-12">
-                                            <img
-                                                src={employee?.photo}
-                                                alt="Avatar Tailwind CSS Component" />
+
+                                    <td>
+                                        <div className="flex items-center gap-3">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle h-12 w-12">
+                                                    <img
+                                                        src={employee?.photo}
+                                                        alt="Avatar Tailwind CSS Component" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="font-bold">{employee?.name}</div>
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <div className="font-bold">{employee?.name}</div>
-                                       
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                {employee?.email}
-                                
-                            </td>
-                            
-                            <th>
-                                <button onClick={()=>handleRemove(employee?._id)} className="btn btn-ghost btn-xs">remove</button>
-                            </th>
-                        </tr>
-                        )
+                                    </td>
+                                    <td>
+                                        {employee?.email}
+
+                                    </td>
+
+                                    <th>
+                                        <button onClick={() => handleRemove(employee?._id)} className="btn btn-ghost btn-xs">remove</button>
+                                    </th>
+                                </tr>
+                            )
                         }
 
 
@@ -96,7 +101,7 @@ const MyEmployeeList = () => {
             </div>
 
 
-            
+
 
         </div>
 

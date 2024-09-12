@@ -5,15 +5,16 @@ import Swal from "sweetalert2";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import StatementPdf from "../../../Components/StatementPdf";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const RequestedAsset = () => {
     const { user } = useAuth();
     const email = user?.email;
     const axiosSecure = useAxiosSecure();
 
-    const [search, setSearch] = useState('');  
-    const [status, setStatus] = useState('');  
-    const [assetType, setAssetType] = useState('');  
+    const [search, setSearch] = useState('');
+    const [status, setStatus] = useState('');
+    const [assetType, setAssetType] = useState('');
 
     const { refetch, data: myrequests = [], isLoading } = useQuery({
         queryKey: ['my-requested-asset', email],
@@ -101,25 +102,40 @@ const RequestedAsset = () => {
     }
 
     return (
-        <div>
-            {myrequests?.length > 0 ? (
+        <div className="p-4">
 
+            <Helmet>
+                <title>Employee | Requested Asset</title>
+            </Helmet>
+            {myrequests?.length > 0 ? (
                 <>
-                    <div className="filters">
+                    <div className="mb-4 flex gap-4 flex-col md:flex-row">
+                        {/* Search Input */}
                         <input
                             type="text"
                             placeholder="Search by asset name"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}  // Update search state
+                            className="input input-bordered w-full md:w-1/3 p-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
 
-                        <select onChange={(e) => setStatus(e.target.value)} value={status}> 
+                        {/* Status Filter */}
+                        <select
+                            onChange={(e) => setStatus(e.target.value)}
+                            value={status}
+                            className="select select-bordered w-full md:w-1/3 p-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
                             <option value="">All Statuses</option>
                             <option value="pending">Pending</option>
                             <option value="approved">Approved</option>
                         </select>
 
-                        <select onChange={(e) => setAssetType(e.target.value)} value={assetType}>  
+                        {/* Asset Type Filter */}
+                        <select
+                            onChange={(e) => setAssetType(e.target.value)}
+                            value={assetType}
+                            className="select select-bordered w-full md:w-1/3 p-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
                             <option value="">All Asset Types</option>
                             <option value="Returnable">Returnable</option>
                             <option value="Not Returnable">Not Returnable</option>
@@ -128,31 +144,31 @@ const RequestedAsset = () => {
 
                     <h1 className="text-2xl font-bold text-center py-4">My Requests</h1>
                     <div className="overflow-x-auto">
-                        <table className="table">
+                        <table className="table w-full border-separate border-spacing-2">
                             <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Request Date</th>
-                                    <th>Approval Date</th>
-                                    <th>Request Status</th>
-                                    <th>Action</th>
+                                <tr className="bg-gray-100">
+                                    <th className="p-2">Name</th>
+                                    <th className="p-2">Type</th>
+                                    <th className="p-2">Request Date</th>
+                                    <th className="p-2">Approval Date</th>
+                                    <th className="p-2">Request Status</th>
+                                    <th className="p-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {/* Render filtered requests */}
                                 {filteredRequests.map((request) => (
-                                    <tr key={request?._id}>
-                                        <td>{request?.asset}</td>
-                                        <td>{request?.assetType}</td>
-                                        <td>{request?.requestedDate}</td>
-                                        <td>{request?.approvalDate}</td>
-                                        <td>{request?.status}</td>
-                                        <td>
+                                    <tr key={request?._id} className="hover:bg-gray-50">
+                                        <td className="p-2">{request?.asset}</td>
+                                        <td className="p-2">{request?.assetType}</td>
+                                        <td className="p-2">{request?.requestedDate}</td>
+                                        <td className="p-2">{request?.approvalDate}</td>
+                                        <td className="p-2">{request?.status}</td>
+                                        <td className="p-2">
                                             {request?.status === "pending" ? (
                                                 <button
                                                     onClick={() => handleReject(request?._id)}
-                                                    className="btn bg-red-400 text-white"
+                                                    className="btn bg-red-400 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-500"
                                                 >
                                                     Cancel
                                                 </button>
@@ -161,7 +177,7 @@ const RequestedAsset = () => {
                                                 <PDFDownloadLink
                                                     document={<StatementPdf request={request} />}
                                                     fileName={`request-statement-${request?._id}.pdf`}
-                                                    className="btn bg-green-400 text-white"
+                                                    className="btn bg-green-400 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-500"
                                                 >
                                                     {({ loading }) => loading ? "Loading..." : "Print"}
                                                 </PDFDownloadLink>
@@ -169,7 +185,7 @@ const RequestedAsset = () => {
                                                 request?.assetType === "Returnable" ? (
                                                 <button
                                                     onClick={() => handleReturn(request?._id)}
-                                                    className="btn bg-blue-400 text-white"
+                                                    className="btn bg-blue-400 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-500"
                                                     disabled={request?.status === "returned"}
                                                 >
                                                     Return
@@ -183,7 +199,7 @@ const RequestedAsset = () => {
                     </div>
                 </>
             ) : (
-                <p>No requests found</p>
+                <p className="text-center text-lg mt-4">No requests found</p>
             )}
         </div>
     );

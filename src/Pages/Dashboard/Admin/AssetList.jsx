@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useHr from "../../../hooks/useHr";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const AssetList = () => {
     const [asset, refetch] = useAsset();
@@ -44,8 +45,8 @@ const AssetList = () => {
 
     // Search, Filter, and Sort logic
     const filteredAssets = asset
-        .filter(item => 
-            item?.name?.toLowerCase().includes(searchTerm.toLowerCase()) && 
+        .filter(item =>
+            item?.name?.toLowerCase().includes(searchTerm.toLowerCase()) &&
             (stockFilter === '' || (stockFilter === 'available' && item?.quantity > 0) || (stockFilter === 'out-of-stock' && item?.quantity === 0)) &&
             (assetTypeFilter === '' || item?.type === assetTypeFilter)
         )
@@ -57,6 +58,10 @@ const AssetList = () => {
 
     return (
         <div>
+
+            <Helmet>
+                <title>Hr| Asset List</title>
+            </Helmet>
             <h1 className="text-center text-3xl font-bold mb-3">Asset List of {hrData?.name}</h1>
             <h1 className="text-center text-sm font-bold mb-3">Available assets ({filteredAssets?.length})</h1>
 

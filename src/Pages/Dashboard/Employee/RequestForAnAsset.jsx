@@ -5,6 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAffiliated from "../../../hooks/useAffiliated";
+import { Helmet } from "react-helmet-async";
 
 const RequestForAnAsset = () => {
 
@@ -100,7 +101,7 @@ const RequestForAnAsset = () => {
             const matchesSearch = item?.name.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesAvailability = filterAvailability
                 ? (filterAvailability === "available" && item?.quantity > 0) ||
-                  (filterAvailability === "out-of-stock" && item?.quantity === 0)
+                (filterAvailability === "out-of-stock" && item?.quantity === 0)
                 : true;
             const matchesAssetType = filterAssetType
                 ? item?.type === filterAssetType
@@ -111,6 +112,10 @@ const RequestForAnAsset = () => {
 
     return (
         <div>
+
+            <Helmet>
+                <title>Employee | Request for an asset</title>
+            </Helmet>
             <h1 className="text-2xl font-bold text-center py-4">Request for an Asset</h1>
 
             {/* Search Section */}

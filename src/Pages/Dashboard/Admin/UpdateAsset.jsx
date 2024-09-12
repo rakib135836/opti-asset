@@ -49,7 +49,7 @@ const UpdateAsset = () => {
     return (
         <div>
             <Helmet>
-                <title>opti-asset | Update Asset</title>
+                <title>hr | Update Asset</title>
             </Helmet>
 
             <div className="hero min-h-screen bg-blue-100">

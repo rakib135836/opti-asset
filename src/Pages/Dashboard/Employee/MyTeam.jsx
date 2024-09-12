@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAffiliated from "../../../hooks/useAffiliated";
+import { Helmet } from "react-helmet-async";
 
 const MyTeam = () => {
     const [affiliated, , notAffiliated] = useAffiliated(); // Adjusted the returned values
@@ -32,6 +33,10 @@ const MyTeam = () => {
     return (
         <div>
 
+            <Helmet>
+                <title>Employee | My Team</title>
+            </Helmet>
+
             <h1 className="text-2xl font-bold text-center py-4">My team</h1>
             <h1 className="text-base font-bold text-center py-2">HR: {email}</h1>
 
@@ -43,7 +48,7 @@ const MyTeam = () => {
 
                             <th>Name</th>
                             <th>Email</th>
-                            
+
 
                         </tr>
                     </thead>
@@ -73,7 +78,7 @@ const MyTeam = () => {
 
                                     </td>
 
-                                   
+
                                 </tr>
                             )
                         }
