@@ -30,7 +30,7 @@ const EmployeeProfile = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Request submitted successfully.",
+                        title: "Updated  successfully.",
                         showConfirmButton: false,
                         timer: 1500,
                     });

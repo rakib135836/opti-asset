@@ -1,21 +1,24 @@
 
 
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2'
 import useAuth from '../../hooks/useAuth';
 import SocialLogin from '../../Components/SocialLogin/SocilaLogin';
 import SocialLoginHr from '../../Components/SocialLoginHr/SocialLoginHr';
+import { useState } from 'react';
 
 
 const Login = () => {
 
-   const {signIn}=useAuth();
+    const { signIn } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
+    // const location = useLocation();
 
-    const from = location.state?.from?.pathname || "/";
-    console.log('state in the location login page', location.state)
+    const [loginError, setLoginError] = useState('');
+
+    // const from = location.state?.from?.pathname || "/";
+    // console.log('state in the location login page', location.state)
 
 
 
@@ -25,7 +28,9 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
-      
+
+        setLoginError('');
+
         signIn(email, password)
             .then(result => {
                 const user = result.user;
@@ -39,7 +44,12 @@ const Login = () => {
                         popup: 'animate__animated animate__fadeOutUp'
                     }
                 });
-                navigate(from, { replace: true });
+                navigate('/')
+                // from, { replace: true }
+            })
+            .catch(error => {
+                console.error(error)
+                setLoginError('invalid email or password');
             })
     }
 
@@ -77,18 +87,25 @@ const Login = () => {
                                 <input className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </form>
+
+                        {
+                            loginError && <p className="text-red-500"> {loginError}</p>
+                        }
+                        
+
                         <div className='px-6'>
                             <small className='text-blue-400'>New Here?</small>
+
                             <ul>
                                 <li><Link to='/register' className='text-blue-500'>join as an employee</Link></li>
                                 <li><Link to='/register-hr' className='text-blue-500'>join as an hr manager</Link></li>
                             </ul>
                         </div>
 
-                       <div className='flex justify-between items-center'>
-                       <SocialLogin></SocialLogin>
-                       <SocialLoginHr></SocialLoginHr>
-                       </div>
+                        <div className='flex justify-between items-center'>
+                            <SocialLogin></SocialLogin>
+                            <SocialLoginHr></SocialLoginHr>
+                        </div>
                     </div>
                 </div>
             </div>
