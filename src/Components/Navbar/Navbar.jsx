@@ -34,7 +34,7 @@ const Navbar = () => {
               <div className='flex flex-row items-center gap-3'>
                 {/* Dash Board btn */}
 
-                <div className='hidden md:block'>
+                <div className=''>
                   {user && isHr && (
                     <Link to='/dashboard/adminHome'>
                       <button

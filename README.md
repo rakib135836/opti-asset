@@ -1,9 +1,13 @@
 # assignment12_category_0007
 
-# opti-Asset
-## A trusted hotel booking website 
+# Opti-Asset
+## A trusted Asset management website for your business. 
 
-[opti-Asset](https://opti-asset.web.app/)
+### **HR Login Credentials**
+- **Username:** hr2@gmail.com
+- **Password:** hr2123
+
+[Opti-Asset](https://opti-asset.web.app/)
 
 ## Features and Characteristics
 
@@ -23,11 +27,18 @@
 
 - **Continuous Updates:** Stay tuned for regular updates and new features as we strive to enhance your experience and meet your evolving needs.
 
+- **Comprehensive Reports:** Generate and download detailed reports of asset management activity, enabling you to track and analyze the performance of your assets over time.
+
+- **Employee Limit Management:** Manage employee addition limits based on HR subscriptions, ensuring smooth and controlled operations within your organization.
+
 ## NPM Packages
 
-1. **AOS:** Animate on scroll effect for React.
-2. **HELMET:** to show page title dynamically.
+1. **calender:** for calendar and event management, including adding and editing date events.
+2. **react-select:** for selecting multiple employees at a time.
+3. **react-pdf:** for downloading asset statements in PDF format.
+4. **axios:** for handling API requests and form submissions.
+5. **react-hook-form:** for managing form validation and state in React applications.
 
 ## Getting Started
 
-To get started with our website, simply visit [Roomify](https://opti-asset.web.app/) and create an account to unlock all features and functionalities. Happy browsing!
+To get started with our website, simply visit [Opti-Asset](https://opti-asset.web.app/) and create an account to unlock all features and functionalities. Happy browsing!

@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from 'sweetalert2';
 import useHr from '../../../hooks/useHr';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 
 
 
@@ -90,6 +91,11 @@ const AddAnEmployee = () => {
             >
                 Add Selected Employees
             </button>
+
+            <h2 className='text-red-400'>to increase the limit click the  button and scroll down</h2>
+            <Link to={'/'}>
+                <button className="btn bg-yellow-100">Increase Limit</button>
+            </Link>
 
             {/* Display the table */}
             <div className="overflow-x-auto mt-6">

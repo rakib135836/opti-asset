@@ -19,9 +19,9 @@ const Dashboard = () => {
 
 
     return (
-        <div className="flex">
+        <div className="flex flex-col lg:flex-row">
             {/* dashboard side bar */}
-            <div className="w-64 min-h-screen bg-custom-image">
+            <div className="w-full lg:w-64 min-h-screen bg-custom-image">
                 <ul className="menu p-4">
                     {
                         hrData ? <>
